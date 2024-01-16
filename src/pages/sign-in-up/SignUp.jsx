@@ -1,5 +1,5 @@
 import { Button, Form } from "react-bootstrap";
-import { CustomInput } from "../../components/custom-input/CustomInput";
+import { CustomInpute } from "../../components/custom-inpute/CustomInpute";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { postNewAdmin } from "../../helpers/axiosHelper";
@@ -9,14 +9,12 @@ const SignUp = () => {
   const [passwordValidationError, setPasswordValidationError] = useState("");
 
   const handleOnChange = (e) => {
-    console.log(e.target);
     //password rules //regex
 
     // 2. must include uppercase
     // 3. must include lowercase
     // 4. must include number
     const { name, value } = e.target;
-
     setPasswordValidationError("");
     if (name === "password") {
       value.length < 6 &&
@@ -38,29 +36,23 @@ const SignUp = () => {
       ...form,
       [name]: value,
     });
-    console.log(form);
   };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
-
     const { confirmPassword, ...rest } = form;
-
     if (confirmPassword !== rest.password) {
       toast.error("Password do not match");
       return;
     }
 
-    const userPending = postNewAdmin(rest);
+    const userPening = postNewAdmin(rest);
 
-    toast.promise(userPending, {
-      pending: "please wait...",
-      // success: "please check your email for varification.",
-      // error: "Error for creating user",
+    toast.promise(userPening, {
+      pending: "Please wait...",
     });
 
-    const { status, message } = await userPending;
+    const { status, message } = await userPening;
     toast[status](message);
   };
 
@@ -121,7 +113,7 @@ const SignUp = () => {
         <h3>Admin signup only</h3>
         <hr />
         {inputs.map((item, i) => (
-          <CustomInput key={i} {...item} onChange={handleOnChange} />
+          <CustomInpute key={i} {...item} onChange={handleOnChange} />
         ))}
 
         <div className="">
