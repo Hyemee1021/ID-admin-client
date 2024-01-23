@@ -14,8 +14,17 @@ import AdminUser from "./pages/admin-user/AdminUser";
 import MyProfile from "./pages/profile/MyProfile";
 import { PrivateRoute } from "./components/provate-route/PrivateRoute";
 import ResetPassword from "./pages/sign-in-up/ResetPassword";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllCats } from "./pages/category/categoryAction";
+import NewProduct from "./pages/product/NewProduct";
+import EditProduct from "./pages/product/EditProduct";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllCats());
+  }, [dispatch]);
   return (
     <div>
       <Routes>
@@ -25,14 +34,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* private route  */}
-        <Route
-          path="/admin-sign-up"
-          element={
-            <PrivateRoute>
-              <SignUp />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/admin-sign-up" element={<SignUp />} />
         <Route
           path="/dashboard"
           element={
@@ -98,6 +100,23 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/product/new"
+          element={
+            <PrivateRoute>
+              <NewProduct />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product/edit/:_id"
+          element={
+            <PrivateRoute>
+              <EditProduct />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<h1>404 Page not found</h1>} />
       </Routes>
       <ToastContainer />
     </div>

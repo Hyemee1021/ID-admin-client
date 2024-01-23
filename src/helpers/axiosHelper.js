@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const rootAPI = import.meta.env.VITE_ROOT_API;
+const rootAPI = import.meta.env.VITE_SERVER_ROOT + "/api/v1";
 const userAPI = rootAPI + "/users";
+const catAPI = rootAPI + "/categories";
+const productAPI = rootAPI + "/products";
 
 const getAccessJWT = () => {
   return sessionStorage.getItem("accessJWT");
@@ -110,12 +112,58 @@ export const resetPassword = (data) => {
     data,
   });
 };
-//reset password
+//update password
 export const updatePassword = (data) => {
   return apiProcessor({
     method: "patch",
     url: userAPI + "/password",
     data,
     isPrivate: true,
+  });
+};
+
+// ======== categories
+//get categories
+export const fetchCategories = () => {
+  return apiProcessor({
+    method: "get",
+    url: catAPI,
+    isPrivate: true,
+  });
+};
+//post categories
+export const postCategory = (data) => {
+  return apiProcessor({
+    method: "post",
+    url: catAPI,
+    isPrivate: true,
+    data,
+  });
+};
+
+// ======== Products
+//get categories
+export const fetchProducts = (_id) => {
+  return apiProcessor({
+    method: "get",
+    url: _id ? productAPI + "/" + _id : productAPI,
+    isPrivate: true,
+  });
+};
+
+export const postProduct = (data) => {
+  return apiProcessor({
+    method: "post",
+    url: productAPI,
+    isPrivate: true,
+    data,
+  });
+};
+export const updateProduct = (data) => {
+  return apiProcessor({
+    method: "put",
+    url: productAPI,
+    isPrivate: true,
+    data,
   });
 };
